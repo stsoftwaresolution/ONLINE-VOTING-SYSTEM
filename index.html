@@ -4,8 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Voting System - Home</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+<style> * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ body {
+    font-family: Arial, sans-serif;
+    background-color: #0f0e0e;
+    color: #bcacac;
+}
+
+ header nav {
+    background-color: #69501f;
+    padding: 10px;
+    text-align: center;
+}
+
+header nav ul {
+    list-style-type: none;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+ section {
+    padding: 20px;
+    margin: 20px 0;
+}
+
+#home {
+    background-color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #5e6f19;
+}
+
+ footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+footer p {
+    font-size: 14px;
+}
+
+ @media (max-width: 768px) {
+    header nav ul li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    section {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    header nav ul li a {
+        font-size: 16px;
+    }
+
+    section {
+        padding: 10px;
+    }
+}
+</style></head>
 <body>
      <header>
         <nav>
@@ -45,10 +128,101 @@
         <p>&copy; 2025 Online Voting System. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
-</body>
-</html>
-
-    <script src="login.js"></script>
+    <script  >// Mock Data for Candidates and Voters
+        let candidates = [
+            { id: 1, name: 'Candidate A' },
+            { id: 2, name: 'Candidate B' },
+            { id: 3, name: 'Candidate C' }
+        ];
+        
+        let voters = [
+            { id: 'VOTER1', voted: false },
+            { id: 'VOTER2', voted: false },
+            { id: 'VOTER3', voted: false },
+            { id: 'VOTER4', voted: false },
+            { id: 'VOTER5', voted: false }
+        ];
+        
+        let votes = {
+            1: 0,  // Candidate A votes
+            2: 0,  // Candidate B votes
+            3: 0   // Candidate C votes
+        };
+        
+        let currentVoter = null;
+        
+        // Voter Registration & Login
+        function login() {
+            let voterId = document.getElementById('voterId').value;
+        
+            let voter = voters.find(v => v.id === voterId);
+        
+            if (voter) {
+                currentVoter = voter;
+                if (voter.voted) {
+                    alert('You have already voted.');
+                    showAdminPanel();  // Skip voting if already voted
+                } else {
+                    showVotingSection();
+                }
+            } else {
+                alert('Voter ID not found.');
+            }
+        }
+        
+        // Show Voting Section
+        function showVotingSection() {
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('votingSection').style.display = 'block';
+        
+            let candidateList = document.getElementById('candidateList');
+            candidateList.innerHTML = '';
+            candidates.forEach(candidate => {
+                let candidateDiv = document.createElement('div');
+                candidateDiv.innerHTML = `
+                    <input type="radio" name="candidate" value="${candidate.id}" id="candidate${candidate.id}">
+                    <label for="candidate${candidate.id}">${candidate.name}</label>
+                `;
+                candidateList.appendChild(candidateDiv);
+            });
+        }
+        
+        // Submit Vote
+        function submitVote() {
+            let selectedCandidate = document.querySelector('input[name="candidate"]:checked');
+            
+            if (selectedCandidate) {
+                let candidateId = selectedCandidate.value;
+                votes[candidateId]++;
+                
+                currentVoter.voted = true;
+                alert('Your vote has been submitted!');
+        
+                // Return to Admin Section if already voted
+                showAdminPanel();
+            } else {
+                alert('Please select a candidate to vote for.');
+            }
+        }
+        
+        // Show Admin Panel
+        function showAdminPanel() {
+            document.getElementById('votingSection').style.display = 'none';
+            document.getElementById('adminSection').style.display = 'block';
+        }
+        
+        // View Results in Admin Panel
+        function viewResults() {
+            let resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            
+            resultsDiv.innerHTML = `
+                <h3>Voting Results:</h3>
+                <p>Candidate A: ${votes[1]} votes</p>
+                <p>Candidate B: ${votes[2]} votes</p>
+                <p>Candidate C: ${votes[3]} votes</p>
+            `;
+        }
+        </script>
 </body>
 </html>
