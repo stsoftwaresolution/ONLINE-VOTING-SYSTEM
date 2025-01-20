@@ -4,7 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Voting System - Home</title>
-<style> * {
+<style> *
+{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    /* Body and Layout */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    
+    /* Container Styling */
+    .container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+    
+    /* Input Fields */
+    .input-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    
+    input {
+        padding: 10px;
+        width: 100%;
+        max-width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        max-width: 300px;
+        border-radius: 5px;
+    }
+    
+    button:hover {
+        background-color: #45a049;
+    }
+    
+    /* Error Message Styling */
+    .error-message {
+        color: red;
+        margin-top: 10px;
+    }
+    
+    /* Responsive Design for Mobile */
+    @media (max-width: 600px) {
+        .container {
+            width: 90%;
+        }
+    
+        input, button {
+            max-width: 100%;
+        }
+    }
+    
+    /* Responsive Design for Tablets */
+    @media (max-width: 768px) {
+        .container {
+            width: 80%;
+        }
+    }
+    *
+
+{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -91,6 +174,47 @@ footer p {
 </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Login</h1>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p id="errorMessage" class="error-message"></p>
+    </div>
+
+    <script  >// Built-in Username and Password
+        const validUsername = 'admin';
+        const validPassword = 'password123';
+        
+        // Form Submission
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission to allow validation
+        
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+        
+            // Validate the Username and Password
+            if (username === validUsername && password === validPassword) {
+                // Redirect to another page on successful login
+                window.location.href = 'index.html'; // Replace with your desired page
+            } else {
+                // Show error message if credentials are incorrect
+                document.getElementById('errorMessage').textContent = 'Invalid username or password';
+            }
+        });
+        </script>
      <header>
         <nav>
             <ul>
